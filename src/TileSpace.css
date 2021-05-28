@@ -1,0 +1,41 @@
+.underTile {
+    height: 100px;
+    width: 100px;
+  }
+  
+  .tileDiv {
+    position: relative;
+  }
+
+  
+.tileContents {
+    top: 0px;
+    position:absolute;
+    width: 100%;
+    color: black;
+  }
+  
+.selectorTiles {
+    margin-right: 3%;
+  }
+  
+  .tileCount {
+    font-size: 12px;
+  }
+  
+  .letter {
+    font-size: 48px;
+    margin-bottom: -12px;
+    margin-top: 10px;
+  }
+  
+  .tileIndicator {
+    margin-right: 2.5%;
+  }
+  
+  .activeTile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
