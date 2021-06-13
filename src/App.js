@@ -6,6 +6,7 @@ import TileImage from './resources/Tile.png';
 import TileSpace from './TileSpace.js';
 import Tile from './Tile.js';
 import React from 'react';
+import SolveButton from './SolveButton.js';
 
 const Grid = styled.div`
   background-image: url(${props => props.img});
@@ -20,18 +21,6 @@ const Row = styled.div`
 const Col = styled.div`
   flex: ${(props) => props.size};
 `;
-
-function stringifyEvent(e) {
-  const obj = {};
-  for (let k in e) {
-    obj[k] = e[k];
-  }
-  return JSON.stringify(obj, (k, v) => {
-    if (v instanceof Node) return 'Node';
-    if (v instanceof Window) return 'Window';
-    return v;
-  }, ' ');
-}
 
 const ColumnBuilder = (size, letter, img = underTile) => {
   return (
@@ -51,8 +40,6 @@ const RowBuilder = (size, letter) => {
     )
   );
 }
-
-const Alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 class App extends React.Component {
 
@@ -75,10 +62,11 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(window.innerWidth);
     return (
       <div className="App">
         <header className="App-header">
-          <Grid className="selectorTiles" width={315}>
+          <Grid className="selectorTiles" width={295}>
             <Row>
               <Col size={5}>
                 <Tile img={TileImage} letter="A" alt="Tile" clickHandler={this.letterTileClick} />
@@ -119,13 +107,13 @@ class App extends React.Component {
             <Tile img={TileImage} letter={this.state.currentLetter} />
           </Grid>
           
-          <Grid img={board} width={1080}>
+          <Grid img={board} width={Math.max(Math.min(window.innerWidth, window.innerHeight), 720)} height={Math.max(Math.min(window.innerWidth, window.innerHeight), 720)}>
             {RowBuilder(10, this.state.currentLetter)}
           </Grid>
-
           <Grid className="tilesInHand">
             <Row>
               <Col>
+                <SolveButton/>
                 <TileSpace letter={this.state.currentLetter} maxStack={1} />
                 <TileSpace letter={this.state.currentLetter} maxStack={1} />
                 <TileSpace letter={this.state.currentLetter} maxStack={1} />

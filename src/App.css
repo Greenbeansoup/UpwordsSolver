@@ -13,3 +13,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.Solve-Button {
+  font-size: 48px;
+  position: relative;
+  margin-bottom: 10px;
+}

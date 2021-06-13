@@ -35,16 +35,29 @@ class TileSpace extends React.Component {
 
     onClick = () => {
         if (this.state.numTiles < this.props.maxStack) {
+            let stack = this.state.tileStack;
+            let tiles = this.state.numTiles + 1;
+            if (tiles === 1) {
+                stack.push(<Tile img={TileImage} letter={this.state.letterTile} alt="Tile" key={tiles}/>);
+            }
+            else {
+                stack.push(<Tile img={TileImage} count={tiles} letter={this.state.letterTile} alt="Tile" key={tiles}/>);
+            }
             this.setState({
-                numTiles: this.state.numTiles + 1
+                numTiles: tiles,
+                tileStack: stack
             });
         }
     }
 
     onDoubleClick = () => {
+        let stack = this.state.tileStack;
+        let tiles = this.state.numTiles - 1;
         if (this.state.numTiles > 0) {
+            stack.pop();
             this.setState({
-                numTiles: this.state.numTiles - 1
+                numTiles: tiles,
+                tileStack: stack
             });
         }
     }
@@ -57,36 +70,16 @@ class TileSpace extends React.Component {
         }
     }
 
-    render() {
+    componentDidMount() {
         const stack = this.state.tileStack;
-        if (stack.length === 0) {
-            stack.push(<Tile img={UnderTile} alt="Bottom" key={0}/>);
-            this.setState({
-                tileStack: stack
-            });
-        }
-        if (stack.length - 1 < this.state.numTiles) {
-            
-            if (this.state.numTiles === 1) {
-                stack.push(<Tile img={TileImage} letter={this.state.letterTile} alt="Tile" key={this.state.numTiles}/>);
-                this.setState({
-                    tileStack: stack
-                });
-            }
-            else {
-                stack.push(<Tile img={TileImage} count={this.state.numTiles} letter={this.state.letterTile} alt="Tile" key={this.state.numTiles}/>);
-                this.setState({
-                    tileStack: stack
-                });
-            }
-        }
-        if (stack.length - 1 > this.state.numTiles) {
-            stack.pop();
-            this.setState({
-                tileStack: stack
-            });
-        }
+        stack.unshift(<Tile img={UnderTile} alt="Bottom" key={0}/>);
+        this.setState({
+            tileStack: stack
+        });
+    }
 
+    render() {
+        let stack = this.state.tileStack;
         return (
             <div onClick={this.clickHandler}>
                 {stack[stack.length - 1]}
