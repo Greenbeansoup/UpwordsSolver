@@ -68,6 +68,21 @@ class TileSpace extends React.Component {
                 letterTile: this.props.letter
             })
         }
+        if (this.props.autoLetter && prevProps.clickId !== this.props.clickId && this.state.numTiles < this.props.maxStack) {
+            let stack = this.state.tileStack;
+            let tiles = this.state.numTiles + 1;
+            // TODO: put the code to add stuff to a stack in it's own method... unless keeping track of that should be done higher up
+            if (tiles === 1) {
+                stack.push(<Tile img={TileImage} letter={this.props.newLetter} alt="Tile" key={tiles}/>);
+            }
+            else {
+                stack.push(<Tile img={TileImage} count={tiles} letter={this.props.newLetter} alt="Tile" key={tiles}/>);
+            }
+            this.setState({
+                tileStack: stack,
+                numTiles: tiles
+            });
+        }
     }
 
     componentDidMount() {
